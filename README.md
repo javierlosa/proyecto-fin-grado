@@ -1,1 +1,43 @@
 # proyecto-fin-grado
+Sistema de gestión de taxis utilizando sistemas de información geográfica.
+
+El objetivo de este trabajo de fin de grado es desarrollar un sistema de gestión de taxis, compuesto por una aplicación para dispositivos móviles para el control de cada uno, una aplicación web para gestionar el sistema, y tecnología de sistemas de información geográfica para la gestión de la información y el cálculo de rutas, que permite mejorar la gestión de dicho servicio. Para alcanzar este objetivo fue necesario, en primer lugar, desarrollar un servicio web siguiendo el paradigma REST, que permite recoger en el servidor central la información de los taxis y de los clientes, posteriormente se desarrolló una aplicación web que permite mostrar y gestionar en un mapa la situación de ambos, y finalmente se desarrolló una aplicación móvil que permite a un taxista realizar su trabajo. En el desarrollo se empleó PostgreSQL para el almacenamiento de información, con el módulo PostGIS, que añade soporte de objetos geográficos, así como AngularJS para la visualización web, y Android para los dispositivos móviles. El trabajo de fin de grado se gestionó siguiendo una metodología iterativa e incremental para el desarrollo de software. Palabras clave: Sistema de información geográfica, gestión de flotas, aplicación móvil, cálculo de rutas, aplicación web dinámica, PostGIS, Spring MVC, Android, AngularJS, Google Maps.
+
+INSTALACION Y CONFIGURACIÓN DE POSTGRESQL CON POSTGIS
+
+Se descarga “PostgreSQL 9.3.4” desde la web oficial. Una vez descargado, se ejecuta su instalador. Se establece “postgres” como contraseña para el usuario base de datos “postgres”. Puerto por defecto 5432. Lo demás por defecto. Se deja marcado “Stack Builder”. Al finalizar la instalación de PostgreSQL, se lanza el instalador de “Stack Builder”. El primer paso es seleccionar la versión de PostgreSQL recién instalada en el puerto seleccionado. En las categorías se despliega “Spatial Extensions”, marcando “PostGIS 2.1 Bundle for PostgreSQL 9.3 (64 bit) v2.1.7” suponiendo que se tenga un sistema de 64 bits. Se deja el resto de pasos por defecto y comienza la descarga de PostGIS. Una vez terminada, se acepta cada paso hasta que concluye la instalación.
+
+Una vez completada la instalación, se abre “pgAdmin3” y después “PostgreSQL 9.3 (localhost:5432)” en “Servers(1)”. Se escribe la contraseña introducida durante la instalación y se marca “Store password” para no tener que repetirla. Se acepta y en la nueva ventana se marca “Do not show this hint again” y se confirma. Se hace click derecho en “Databases(1)” y se pulsa en “New Database...” En la pestañaa “Properties”, en “Name” escribir “bd postgis” y en “Owner” seleccionar “postgres”. En la pestaña “Definition”, en “Tablespace” seleccionar “pg default”, y en “Collation” y “Character type” seleccionar “Spanish Spain.1252”. Se confirman los cambios. Se abre “bd postgis”, click derecho en “Extensions(1)‘” y se pulsa “New Extension...”. En la pestaña “Properties”, en “Name” se escribe “postgis” mientras que en la pestaña “Definition”, en “Schema” se selecciona “public” y en “Version” se selecciona “2.1.7” (o la versión instalada). Se confirman los cambios. Para la base de datos en la que ejecutar los test, se repiten los mismos pasos de este párrafo cambiando el nombre de la base de datos de “bd postgis” por “bd postgis test”.
+
+Una vez configuradas las bases de datos, es necesario importar las tablas de donde se obtienen los datos geográficos. Se pulsa sobre la base de datos “bd postgis”, en
+“Plugins” (en la parte de arriba de la pantalla) y se abre “PostGIS Shapefile and DBF loader 2.1”. Se añaden los siguientes archivos de la siguiente manera:
+1. Se pulsa en “Add File”. Se elige “recintos provinciales inspire peninbal etrs89.shp”, se confirma, se hace doble click en el campo “Table”, se escribe “provincia”, doble click en el campo “SRID” y se escribe “4326”.
+2. Se pulsa en “Add File”. Se elige “recintos municipales inspire peninbal etrs89.shp”, se confirma, se hace doble click en el campo “Table”, se escribe “municipio”, doble click en el campo “SRID” y se escribe “4326”.
+3. Se pulsa en “Add File”. Se elige “TRAMO VIAL.shp”, se confirma, se hace doble click en el campo “Table”, se escribe “calle”, doble click en el campo “SRID” y se escribe “4326”.
+4. Se pulsa en “Add File”. Se elige “standoverpass.shp”, se confirma, se hace doble click en el campo “SRID” y se escribe “4326”.
+
+Se pulsa “Import” y se espera a que importe las tablas. Al acabar se cierra la ventana.
+
+Una vez importadas las tablas auxiliares, se ejecuta el script de creación de tablas. Para ello, se pulsa sobre “bd postgis” y se abre “Execute arbitrary SQL queries” (Icono de una lupa con un SQL dentro). Se abre el script “CreateTables” y se pulsa “Execute query” (Icono verde de reproducción). Esperar de 3 a 7 minutos a que acabe. Se cierra la ventana. Repetir el proceso (desde la importación de las tablas donde se obtienen los datos geográficos) pero pulsando “bd postgis test” en vez de “bd postgis” y seleccionando el script “CreateTablesTest” en lugar de “CreateTables”.
+
+INSTALACION Y CONFIGURACIÓN DEL SERVIDOR DE APLICACIONES TOMCAT
+
+Se descarga el zip del “core” de “Tomcat 8.5.4” desde la sección de descargas de la web oficial y se descomprime. Se descarga el jar de PostgreSQL en https://mvnrepository.com/artifact/org.postgresql/postgresql/9.4-1200-jdbc41, y se pega en “lib”, dentro del tomcat. Es necesario tener java instalado con la variable “JAVA HOME” en el sistema. Se copia el war del servicio web en “webapps” en la raíz del tomcat, se entra en “bin” y se ejecuta “startup”. Para finalizarlo se ejecuta “shutdown”.
+
+CONFIGURACION DE FIREBASE CLOUD MESSAGING
+
+Entrar en la consola de Firebase https://console.firebase.google.com/?hl=es&pli=1. En “CREAR NUEVO PROYECTO”, escribir el nombre del proyecto, “TaxiCentral”, y en “País/Región” seleccionar España. Pulsar en “CREAR PROYECTO”. En la esquina superior izquierda, a la derecha del nombre, pulsar en la tuerca y “configuración del proyecto”. En la pestaña “MENSAJERÍA EN LA NUBE” se muestra la clave del servidor, la cual se debe copiar y pegar en el archivo del cliente web “map.js”, para que la Central envíe las notificaciones a Firebase y éste a cada cliente móvil. En la pestaña “General”, pulsar “Añade Firebase a tu aplicación de Android”. En la nueva ventana, introducir el nombre del paquete, “tfg.taxicentral”, y se pulsa “ANADIR APLICACIÓN”. Se descargará el archivo “google-services.json”, y después de realizar los pasos del siguiente apartado (Instalación y configuración del cliente móvil Android), se moverá al directorio root del módulo de la aplicación de Android (para ver el root cambiar a la vista Proyecto De Android Studio, se sitúa en “app”). Se continúa y se carga el archivo que se acaba de descargar. Las dependencias ya están cargadas así que no hay nada que cambiar.
+
+INSTALACION Y CONFIGURACIÓN DEL CLIENTE MÓVIL ANDROID
+
+Se descarga “Android Studio 141.2456560” desde la web oficial y se ejecuta el instalador. Se aceptan los pasos hasta que empieza la instalación. Al finalizar, se ejecuta Android Studio y se instala el SDK de Android con el API (el emulador si así se desea). Al acabar la descarga, en la nueva pantalla se selecciona “Import project (Eclipse ADT, Gradle, etc.)” y se selecciona el proyecto “TaxiCentral”. Aceptar los diálogos necesarios. Una vez cargado el proyecto, en el “build.gradle” en “app”, se cambia la versión del SDK al que tengamos instalado (API 23 es el usado en el proyecto).
+
+Para trabajar con el API de Google Maps, primero se accede a https://developers.google.com/maps/documentation/android-api/?hl=es, se pulsa en “OBTENER UNA CLAVE” y “CONTINUAR”. En el primer seleccionable se elige el proyecto “TaxiCentral”, el siguiente se marca No y el siguiente Si. Se pulsa Aceptar y continuar. En el primer seleccionable se elige “Google Maps Android API” y en el segundo “Android”. Después pulsar “¿Qué credenciales necesito?” Copiar la Key mostrada y pegarla en “google maps api.xml”. En “strings.xml” pegar la ip de la máquina donde corre el servidor.
+
+EJECUCIÓN
+
+Para cargar la aplicación en el móvil, o bien se puede generar el apk, enviarlo a la memoria e instalarlo, o bien se conecta al ordenador y se arranca la aplicación a
+través del “Device Chooser” eligiendo dicho móvil. Esta acción instalará la aplicación y la iniciará (es necesario habilitar el modo de depuración USB en android y aceptar
+el diálogo que sale al conectarlo).
+
+Arrancar el servidor de aplicaciones, abrir el “index.html” del cliente web e iniciar la aplicación del cliente móvil Android.

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TaxiCentral</string>
+
+    <string name="ip">http://192.168.43.70:8080/TaxiCentral/</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_taxiId">Taxi ID</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_log_in">Log in</string>
+    <string name="error_invalid_taxiId">This taxi ID is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="title_activity_navigation">Navigation</string>
+
+    <!-- Strings related to menu -->
+
+    <!-- Strings related to goto -->
+    <string name="spain">España</string>
+    <string name="corunna">A Coruña</string>
+</resources>

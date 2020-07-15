@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pfg.taxicentral.PlanFutureTravelDestinationActivity">
+
+    <TextView
+        android:id="@+id/destinationCountriesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Destination -> Country: " />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextViewDestinationCountries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/destinationCountriesTextView"
+        android:ems="10"
+        android:text="">
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <TextView
+        android:id="@+id/destinationRegionsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/autoCompleteTextViewDestinationCountries"
+        android:text="Destination -> Region: " />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextViewDestinationRegions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/destinationRegionsTextView"
+        android:ems="10"
+        android:text="">
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <TextView
+        android:id="@+id/destinationCitiesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/autoCompleteTextViewDestinationRegions"
+        android:text="Destination -> City: " />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextViewDestinationCities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/destinationCitiesTextView"
+        android:ems="10"
+        android:text="">
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <TextView
+        android:id="@+id/destinationAddressesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/autoCompleteTextViewDestinationCities"
+        android:text="Destination -> Address: " />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextViewDestinationAddresses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/destinationAddressesTextView"
+        android:ems="10"
+        android:text="">
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <Button
+        android:id="@+id/planFutureTravelButton"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/in_time"
+        android:text="Plan future travel"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/in_date"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/autoCompleteTextViewDestinationAddresses"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SELECT DATE"
+        android:id="@+id/btn_date"
+        android:layout_marginTop="10dp"
+        android:layout_alignBottom="@+id/in_date"
+        android:layout_toRightOf="@+id/in_date"
+        android:layout_toEndOf="@+id/in_date" />
+
+    <EditText
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/in_time"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/in_date"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SELECT TIME"
+        android:id="@+id/btn_time"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/in_date"
+        android:layout_alignLeft="@+id/btn_date"
+        android:layout_alignStart="@+id/btn_date" />
+
+</RelativeLayout>
+
+    </ScrollView>
